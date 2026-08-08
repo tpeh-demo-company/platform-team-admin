@@ -47,6 +47,13 @@ github_repositories:
           dismiss_stale_reviews: false
           require_code_owner_reviews: false
           require_last_push_approval: false
+  - name: platform-helm-chart
+    description: The Platform Engineer's Handbook - Generic Helm Chart for Company-Wide Use
+    visibility: public
+    branch_protection:
+      - pattern: "main"
+        enforce_admins: true
+        require_signed_commits: true
   - name: platform-services
     description: The Platform Engineer's Handbook - Platform Services Tenant Repository
     visibility: public
