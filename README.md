@@ -12,7 +12,7 @@ The workflow is tag-driven: pushing a `v*` tag triggers a Pulumi preview, waits 
 
 - [Pulumi CLI](https://www.pulumi.com/docs/install/)
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) — Python toolchain
-- [Bitwarden CLI](https://bitwarden.com/help/cli/) (`bw`) — used to fetch secrets
+- [Bitwarden Secrets Manager CLI](https://bitwarden.com/help/secrets-manager-cli/) (`bws`) — used to manage secrets
 - A GitHub personal access token with `repo` and `admin:org` scopes
 
 ## Managed Repositories
@@ -36,11 +36,11 @@ uv sync
 
 **2. Configure secrets**
 
-Copy `.env.example` to `.env` and fill in your Bitwarden credentials.
+Copy `.env.example` to `.env` and fill in your Bitwarden Secrets Manager credentials (`BWS_ACCESS_TOKEN`, `BWS_PROJECT_ID`). If you are on the EU server, also add `BWS_SERVER_URL=https://vault.bitwarden.eu`.
 
-**3. Populate Bitwarden (first time only)**
+**3. Populate Bitwarden Secrets Manager (first time only)**
 
-If this is your first time setting up, push the secrets into Bitwarden:
+Copy `secrets-setup/secrets.json_example` to `secrets-setup/secrets.json`, fill in your values, then push them to Bitwarden:
 
 ```bash
 cd secrets-setup
