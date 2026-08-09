@@ -1,6 +1,6 @@
 # The Platform Engineer's Handbook - Platform Team Administration
 
-[![Pulumi Infrastructure](https://github.com/Jdavid77/platform-team-admin/actions/workflows/pulumi.yml/badge.svg)](https://github.com/Jdavid77/platform-team-admin/actions/workflows/pulumi.yml)
+[![Pulumi Infrastructure](https://github.com/tpeh-demo-company/platform-team-admin/actions/workflows/pulumi.yml/badge.svg)](https://github.com/tpeh-demo-company/platform-team-admin/actions/workflows/pulumi.yml)
 
 Follow-along repository for *The Platform Engineer's Handbook*.
 
@@ -10,35 +10,37 @@ The workflow is tag-driven: pushing a `v*` tag triggers a Pulumi preview, waits 
 
 ## Prerequisites
 
-- [Pulumi CLI](https://www.pulumi.com/docs/install/)
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) — Python toolchain
-- [Bitwarden Secrets Manager CLI](https://bitwarden.com/help/secrets-manager-cli/) (`bws`) — used to manage secrets
-- A GitHub personal access token with `repo` and `admin:org` scopes
+| Tool | Purpose |
+| ---- | ------- |
+| [Pulumi CLI](https://www.pulumi.com/docs/install/) | Deploy and manage infrastructure state |
+| [uv](https://docs.astral.sh/uv/getting-started/installation/) | Python toolchain and dependency management |
+| [bws](https://bitwarden.com/help/secrets-manager-cli/) | Bitwarden Secrets Manager CLI for secret injection |
+| GitHub PAT | Personal access token with `repo` and `admin:org` scopes |
 
 ## Managed Repositories
 
 | Repository | Description |
-|---|---|
-| [platform-team-admin](https://github.com/Jdavid77/platform-team-admin) | Repository to manage platform team membership and admin artifacts |
-| [platform-core](https://github.com/Jdavid77/platform-core) | Core platform runtime |
-| [platform-demo-apps](https://github.com/Jdavid77/platform-demo-apps) | Demo application for testing the platform |
-| [platform-gitops](https://github.com/Jdavid77/platform-gitops) | FluxCD App-of-Apps Repository |
-| [platform-helm-chart](https://github.com/Jdavid77/platform-helm-chart) | Generic Helm Chart for Company-Wide Use |
-| [platform-services](https://github.com/Jdavid77/platform-services) | Platform Services Tenant Repository |
+| ---------- | ----------- |
+| [platform-team-admin](https://github.com/tpeh-demo-company/platform-team-admin) | Repository to manage platform team membership and admin artifacts |
+| [platform-core](https://github.com/tpeh-demo-company/platform-core) | Core platform runtime |
+| [platform-demo-app](https://github.com/tpeh-demo-company/platform-demo-app) | Demo application for testing the platform |
+| [platform-gitops](https://github.com/tpeh-demo-company/platform-gitops) | FluxCD App-of-Apps Repository |
+| [platform-helm-chart](https://github.com/tpeh-demo-company/platform-helm-chart) | Generic Helm Chart for Company-Wide Use |
+| [platform-services](https://github.com/tpeh-demo-company/platform-services) | Platform Services Tenant Repository |
 
 ## Setup
 
-**1. Install dependencies**
+### 1. Install dependencies
 
 ```bash
 uv sync
 ```
 
-**2. Configure secrets**
+### 2. Configure secrets
 
 Copy `.env.example` to `.env` and fill in your Bitwarden Secrets Manager credentials (`BWS_ACCESS_TOKEN`, `BWS_PROJECT_ID`). If you are on the EU server, also add `BWS_SERVER_URL=https://vault.bitwarden.eu`.
 
-**3. Populate Bitwarden Secrets Manager (first time only)**
+### 3. Populate Bitwarden Secrets Manager (first time only)
 
 Copy `secrets-setup/secrets.json_example` to `secrets-setup/secrets.json`, fill in your values, then push them to Bitwarden:
 
@@ -47,7 +49,7 @@ cd secrets-setup
 ./inject_secrets.sh
 ```
 
-**4. Inject secrets into Pulumi**
+### 4. Inject secrets into Pulumi
 
 Pull the secrets from Bitwarden and set them as Pulumi config values:
 
