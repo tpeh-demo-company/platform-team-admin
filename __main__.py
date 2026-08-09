@@ -1,7 +1,8 @@
 import pulumi
 from pulumi_github import Provider
 
-from pulumi_repo_create import create_repos
+from modules.memberships import create_members
+from modules.repos import create_repos
 
 github_provider = Provider(
     "platform-github-provider",
@@ -9,4 +10,5 @@ github_provider = Provider(
     owner=pulumi.Config("github").require("owner"),
 )
 
+create_members(github_provider)
 create_repos(github_provider)

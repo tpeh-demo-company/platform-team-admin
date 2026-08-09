@@ -1,4 +1,4 @@
 config:
   github:token:
     secure: AAABAGry9u4eZ9aTAinqNRAlw42Stn1bbO4T7vkuhM5EeIWrwtZugY3+Zll4jbbunDM6Q30WVOaDzoH9kaoYK+v1SCqkgRqO
-  github:owner: Jdavid77
+  github:owner: tpeh-demo-company

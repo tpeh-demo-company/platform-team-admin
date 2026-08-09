@@ -30,7 +30,7 @@ github_repositories:
         reviewers:
           - Jdavid77
 
-  - name: platform-demo-apps
+  - name: platform-demo-app
     description: The Platform Engineer's Handbook - Demo application for testing the platform
     visibility: public
     branch_protection:
@@ -77,8 +77,7 @@ github_repositories:
           require_code_owner_reviews: false
           require_last_push_approval: false
 
-# github_organization_members:
-#   - name: Team Member
-#     github-role: admin
-#     github-username: team_member
-#     email: team_member@email.com
+github_organization_members:
+  - name: Jdavid77
+    github-role: admin
+    github-username: Jdavid77
