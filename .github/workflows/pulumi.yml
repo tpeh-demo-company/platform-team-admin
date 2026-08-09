@@ -15,9 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
         run: uv sync --all-groups
@@ -33,9 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
         run: uv sync --all-groups
@@ -52,23 +56,36 @@ jobs:
     needs: [lint-code, static-analysis]
     environment: pulumi
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - uses: astral-sh/setup-uv@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
 
-      - run: uv sync
+      - name: Install dependencies
+        run: uv sync
 
-      - uses: pulumi/actions@v6
+      - name: Fetch secrets from Bitwarden
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
+          base_url: https://vault.bitwarden.eu
+          secrets: |
+            f5789e30-d191-4558-b135-b4a100c506ee > PULUMI_ACCESS_TOKEN
+
+      - name: Run Pulumi preview
+        uses: pulumi/actions@v6
         with:
           command: preview
           stack-name: Jdavid77/platformteamadministration/dev
           color: always
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ env.PULUMI_ACCESS_TOKEN }}
 
   # ── Manual approval gate ──────────────────────────────────────────────────────
   approve-deployment:
@@ -77,7 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: pulumi-production
     steps:
-      - run: echo "Deployment approved"
+      - name: Await manual approval
+        run: echo "Deployment approved"
 
   # ── Deploy ────────────────────────────────────────────────────────────────────
   pulumi-up:
@@ -86,20 +104,33 @@ jobs:
     runs-on: ubuntu-latest
     environment: pulumi
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - uses: astral-sh/setup-uv@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
 
-      - run: uv sync
+      - name: Install dependencies
+        run: uv sync
 
-      - uses: pulumi/actions@v6
+      - name: Fetch secrets from Bitwarden
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.BWS_ACCESS_TOKEN }}
+          base_url: https://vault.bitwarden.eu
+          secrets: |
+            f5789e30-d191-4558-b135-b4a100c506ee > PULUMI_ACCESS_TOKEN
+
+      - name: Run Pulumi up
+        uses: pulumi/actions@v6
         with:
           command: up
           stack-name: Jdavid77/platformteamadministration/dev
           color: always
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ env.PULUMI_ACCESS_TOKEN }}
