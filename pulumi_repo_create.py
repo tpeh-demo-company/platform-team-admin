@@ -44,7 +44,7 @@ def create_repos(provider: Provider):
             name=repo_name,
             description=repo_description,
             visibility=visibility,
-            opts=ResourceOptions(provider=provider),
+            opts=ResourceOptions(provider=provider, protect=True),
         )
 
         for bp_def in repo_def.get("branch_protection", []):
