@@ -15,6 +15,17 @@ The workflow is tag-driven: pushing a `v*` tag triggers a Pulumi preview, waits 
 - [Bitwarden CLI](https://bitwarden.com/help/cli/) (`bw`) — used to fetch secrets
 - A GitHub personal access token with `repo` and `admin:org` scopes
 
+## Managed Repositories
+
+| Repository | Description |
+|---|---|
+| [platform-team-admin](https://github.com/Jdavid77/platform-team-admin) | Repository to manage platform team membership and admin artifacts |
+| [platform-core](https://github.com/Jdavid77/platform-core) | Core platform runtime |
+| [platform-demo-apps](https://github.com/Jdavid77/platform-demo-apps) | Demo application for testing the platform |
+| [platform-gitops](https://github.com/Jdavid77/platform-gitops) | FluxCD App-of-Apps Repository |
+| [platform-helm-chart](https://github.com/Jdavid77/platform-helm-chart) | Generic Helm Chart for Company-Wide Use |
+| [platform-services](https://github.com/Jdavid77/platform-services) | Platform Services Tenant Repository |
+
 ## Setup
 
 **1. Install dependencies**
@@ -25,14 +36,25 @@ uv sync
 
 **2. Configure secrets**
 
-Copy `.env.example` to `.env` and fill in your Bitwarden credentials, then run:
+Copy `.env.example` to `.env` and fill in your Bitwarden credentials.
+
+**3. Populate Bitwarden (first time only)**
+
+If this is your first time setting up, push the secrets into Bitwarden:
+
+```bash
+cd secrets-setup
+./inject_secrets.sh
+```
+
+**4. Inject secrets into Pulumi**
+
+Pull the secrets from Bitwarden and set them as Pulumi config values:
 
 ```bash
 cd secrets-setup
 ./fetch_secrets.sh
 ```
-
-This pulls your GitHub token and org owner from Bitwarden and sets them as Pulumi config values.
 
 ## Configure repositories
 
@@ -60,14 +82,15 @@ github_repositories:
 
 ## Deploy
 
-Preview changes:
+Preview changes locally before triggering the pipeline:
 
 ```bash
 pulumi preview
 ```
 
-Apply changes (triggered automatically on tags matching `v*`):
+To deploy, trigger the **Tag** workflow manually from GitHub Actions. This auto-generates a versioned tag (`vYYYY.MM.DD.i`) which kicks off the pipeline:
 
-```bash
-pulumi up
-```
+1. Lint and static analysis
+2. `pulumi preview` runs and posts the plan
+3. Manual approval gate (requires review in the `pulumi-production` environment)
+4. `pulumi up` runs automatically after approval

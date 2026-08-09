@@ -11,6 +11,7 @@ github_repositories:
       - name: pulumi-production
         reviewers:
           - Jdavid77
+
   - name: platform-core
     description: The Platform Engineer's Handbook - Core platform runtime
     visibility: public
@@ -28,6 +29,7 @@ github_repositories:
       - name: shared
         reviewers:
           - Jdavid77
+
   - name: platform-demo-apps
     description: The Platform Engineer's Handbook - Demo application for testing the platform
     visibility: public
@@ -35,6 +37,7 @@ github_repositories:
       - pattern: "main"
         enforce_admins: true
         require_signed_commits: true
+
   - name: platform-gitops
     description: The Platform Engineer's Handbook - FluxCD App-of-Apps Repository
     visibility: public
@@ -47,6 +50,7 @@ github_repositories:
           dismiss_stale_reviews: false
           require_code_owner_reviews: false
           require_last_push_approval: false
+
   - name: platform-helm-chart
     description: The Platform Engineer's Handbook - Generic Helm Chart for Company-Wide Use
     visibility: public
@@ -54,6 +58,7 @@ github_repositories:
       - pattern: "main"
         enforce_admins: true
         require_signed_commits: true
+
   - name: platform-services
     description: The Platform Engineer's Handbook - Platform Services Tenant Repository
     visibility: public
