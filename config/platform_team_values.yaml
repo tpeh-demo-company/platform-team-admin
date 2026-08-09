@@ -57,7 +57,9 @@ github_repositories:
     branch_protection:
       - pattern: "main"
         enforce_admins: true
-        require_signed_commits: true
+        # Semantic Release Bot will be used to commit files to this repository, so we need to disable for now
+        # Thinking of an alternative approach to this, but for now, we will disable this requirement
+        require_signed_commits: false 
 
   - name: platform-services
     description: The Platform Engineer's Handbook - Platform Services Tenant Repository
