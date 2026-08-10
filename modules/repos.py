@@ -4,7 +4,6 @@ from pulumi import ResourceOptions, export
 from pulumi_github import (
     BranchProtection,
     BranchProtectionRequiredPullRequestReviewArgs,
-    BranchProtectionRequiredPullRequestReviewsBypassPullRequestAllowancesArgs,
     Provider,
     Repository,
     RepositoryEnvironment,
@@ -52,14 +51,14 @@ def create_repos(provider: Provider):
             pr_reviews = None
             pr_def = bp_def.get("required_pull_request_reviews")
             if pr_def is not None:
+                # pull_request_bypassers takes a flat list of slugs:
+                # users: "username", teams: "org/team", apps: "/app-slug"
                 bypass_def = pr_def.get("bypass_pull_request_allowances", {})
-                bypass_args = None
-                if bypass_def:
-                    bypass_args = BranchProtectionRequiredPullRequestReviewsBypassPullRequestAllowancesArgs(
-                        apps=bypass_def.get("apps", []),
-                        users=bypass_def.get("users", []),
-                        teams=bypass_def.get("teams", []),
-                    )
+                bypassers = (
+                    bypass_def.get("users", [])
+                    + [f"/{a}" for a in bypass_def.get("apps", [])]
+                    + bypass_def.get("teams", [])
+                )
                 pr_reviews = [
                     BranchProtectionRequiredPullRequestReviewArgs(
                         required_approving_review_count=pr_def.get(
@@ -74,7 +73,7 @@ def create_repos(provider: Provider):
                         require_last_push_approval=pr_def.get(
                             "require_last_push_approval", False
                         ),
-                        bypass_pull_request_allowances=bypass_args,
+                        pull_request_bypassers=bypassers or None,
                     )
                 ]
 
