@@ -27,9 +27,9 @@ while read -r secret; do
 
     if [ -n "$existing_id" ]; then
         echo "Secret '$name' exists, updating..."
-        bws secret edit "$existing_id" --value "$value" --note "$note"
+        bws secret edit "$existing_id" --value="$value" --note="$note"
     else
         echo "Secret '$name' does not exist, creating..."
-        bws secret create "$name" "$value" "$BWS_PROJECT_ID" --note "$note"
+        bws secret create "$name" "$BWS_PROJECT_ID" --value="$value" --note="$note"
     fi
 done < <(jq -c '.[]' "$SECRETS_FILE")

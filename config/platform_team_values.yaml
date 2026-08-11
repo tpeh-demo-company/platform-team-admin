@@ -46,7 +46,7 @@ github_repositories:
           require_last_push_approval: false
           bypass_pull_request_allowances:
             apps:
-              - github-actions
+              - tpeh-release-bot
       - pattern: "*"
         enforce_admins: true
         require_signed_commits: true
@@ -83,7 +83,7 @@ github_repositories:
           require_last_push_approval: false
           bypass_pull_request_allowances:
             apps:
-              - github-actions
+              - tpeh-release-bot
       - pattern: "*"
         enforce_admins: true
         require_signed_commits: true
