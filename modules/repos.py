@@ -32,6 +32,14 @@ def create_repos(provider: Provider):
 
     _validate_reviewers(data)
 
+    # For simplicity reasons , let all admins be the reviewers of all environments by default.
+    # In a real org would want more segregation.
+    admin_usernames = [
+        m["github-username"]
+        for m in data.get("github_organization_members", [])
+        if m.get("github-role") == "admin"
+    ]
+
     for repo_def in data.get("github_repositories", []):
         repo_name = repo_def.get("name")
         repo_description = repo_def.get("description", "")
@@ -88,7 +96,7 @@ def create_repos(provider: Provider):
             )
 
         for env_def in repo_def.get("environments", []):
-            reviewer_usernames = env_def.get("reviewers", [])
+            reviewer_usernames = env_def.get("reviewers", admin_usernames)
             reviewers = []
             if reviewer_usernames:
                 user_ids = [int(get_user(username=u).id) for u in reviewer_usernames]

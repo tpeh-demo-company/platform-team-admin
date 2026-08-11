@@ -7,10 +7,7 @@ github_repositories:
         enforce_admins: true
         require_signed_commits: true
     environments:
-      - name: pulumi
-      - name: pulumi-production
-        reviewers:
-          - Jdavid77
+      - name: production
 
   - name: platform-core
     description: The Platform Engineer's Handbook - Core platform runtime
@@ -21,14 +18,8 @@ github_repositories:
         require_signed_commits: true
     environments:
       - name: platform-sandbox
-        reviewers:
-          - Jdavid77
       - name: app-dev
-        reviewers:
-          - Jdavid77
       - name: shared
-        reviewers:
-          - Jdavid77
 
   - name: platform-demo-app
     description: The Platform Engineer's Handbook - Demo application for testing the platform
