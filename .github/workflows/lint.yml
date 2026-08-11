@@ -1,0 +1,57 @@
+name: Lint & SAST
+
+on:
+  workflow_call:
+
+jobs:
+
+  lint-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v7
+
+      - name: Install Actions Linter
+        run: go install github.com/rhysd/actionlint/cmd/actionlint@latest
+
+      - name: Lint Action workflows
+        run: actionlint
+
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Check code formatting with black
+        run: uv run black --check --diff --target-version py312 .
+
+      - name: Type check with mypy
+        run: uv run mypy . --ignore-missing-imports
+
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Lint with ruff
+        run: uv run ruff check .
+
+      - name: Security scan with bandit
+        run: uv run bandit -r . -ll --exclude ./.venv
