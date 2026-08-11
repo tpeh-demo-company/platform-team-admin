@@ -59,13 +59,12 @@ def create_repos(provider: Provider):
             pr_reviews = None
             pr_def = bp_def.get("required_pull_request_reviews")
             if pr_def is not None:
-                # pull_request_bypassers takes a flat list of slugs:
-                # users: "username", teams: "org/team", apps: "/app-slug"
+                # pull_request_bypassers: users="/login", teams="org/slug", apps=node_id
                 bypass_def = pr_def.get("bypass_pull_request_allowances", {})
                 bypassers = (
                     bypass_def.get("users", [])
-                    + [f"/{a}" for a in bypass_def.get("apps", [])]
                     + bypass_def.get("teams", [])
+                    + bypass_def.get("apps", [])
                 )
                 pr_reviews = [
                     BranchProtectionRequiredPullRequestReviewArgs(

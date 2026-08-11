@@ -37,7 +37,7 @@ github_repositories:
           require_last_push_approval: false
           bypass_pull_request_allowances:
             apps:
-              - tpeh-release-bot
+              - A_kwHOEsg9vM4ARYar  # tpeh-release-bot node ID
       - pattern: "*"
         enforce_admins: true
         require_signed_commits: true
@@ -74,7 +74,7 @@ github_repositories:
           require_last_push_approval: false
           bypass_pull_request_allowances:
             apps:
-              - tpeh-release-bot
+              - A_kwHOEsg9vM4ARYar  # tpeh-release-bot node ID
       - pattern: "*"
         enforce_admins: true
         require_signed_commits: true
