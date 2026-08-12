@@ -61,7 +61,7 @@ def create_repos(provider: Provider):
             f"{repo_name}-bws-access-token",
             repository=repository.name,
             secret_name="BWS_ACCESS_TOKEN",
-            plaintext_value=bws_access_token,
+            value=bws_access_token,
             opts=ResourceOptions(provider=provider, depends_on=[repository]),
         )
 
