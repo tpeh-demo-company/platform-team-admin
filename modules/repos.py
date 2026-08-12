@@ -2,6 +2,7 @@ import pulumi
 import yaml
 from pulumi import ResourceOptions, export
 from pulumi_github import (
+    ActionsSecret,
     BranchProtection,
     BranchProtectionRequiredPullRequestReviewArgs,
     Provider,
@@ -30,6 +31,8 @@ def create_repos(provider: Provider):
     with open("config/platform_team_values.yaml") as f:
         data = yaml.safe_load(f)
 
+    bws_access_token = pulumi.Config().require_secret("bws_access_token")
+
     _validate_reviewers(data)
 
     # For simplicity reasons , let all admins be the reviewers of all environments by default.
@@ -51,6 +54,15 @@ def create_repos(provider: Provider):
             description=repo_description,
             visibility=visibility,
             opts=ResourceOptions(provider=provider, protect=True),
+        )
+
+        # BWS_ACCESS_TOKEN is provisioned to every repo with read-only machine account perms
+        ActionsSecret(
+            f"{repo_name}-bws-access-token",
+            repository=repository.name,
+            secret_name="BWS_ACCESS_TOKEN",
+            plaintext_value=bws_access_token,
+            opts=ResourceOptions(provider=provider, depends_on=[repository]),
         )
 
         for bp_def in repo_def.get("branch_protection", []):

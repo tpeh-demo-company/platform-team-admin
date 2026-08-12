@@ -13,11 +13,13 @@ set +o allexport
 
 github_token=$(bws secret list | jq -r '.[] | select(.key == "GITHUB_TOKEN") | .value')
 github_owner=$(bws secret list | jq -r '.[] | select(.key == "GITHUB_OWNER") | .value')
+bws_access_token=$(bws secret list | jq -r '.[] | select(.key == "BWS_ACCESS_TOKEN") | .value')
 
 (
     cd ..
     pulumi config set --secret github:token "$github_token"
     pulumi config set github:owner "$github_owner"
+    pulumi config set --secret bws_access_token "$bws_access_token"
 )
 
 echo "Pulumi config updated."
