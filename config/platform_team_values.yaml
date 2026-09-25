@@ -95,6 +95,19 @@ github_repositories:
           require_code_owner_reviews: false
           require_last_push_approval: false
 
+  - name: platform-workflows
+    description: The Platform Engineer's Handbook - Reusable CI workflows for publishing signed OCI artifacts
+    visibility: public
+    branch_protection:
+      - pattern: "main"
+        enforce_admins: true
+        require_signed_commits: true
+        required_pull_request_reviews:
+          required_approving_review_count: 0
+          dismiss_stale_reviews: false
+          require_code_owner_reviews: false
+          require_last_push_approval: false
+
 github_organization_members:
   - name: Jdavid77
     github-role: admin
