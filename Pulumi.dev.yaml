@@ -1,6 +1,6 @@
 config:
   github:token:
-    secure: AAABABufvDE4aobDpyEGI/rOGLtY7R7IxbyJMtx54sURYqWNTagUqiHJWiNWv/lySQj0HJG1ttCpkMTSBHp/9tLAcz01ZELA
+    secure: AAABAFiS5PRp8+5P8g73K+uDcrRclRDMSxoY3BJXMvIJfPbwO/whcSpXKslrWHCaZKqozfR6jDs5xJdX2XD9c9niuq+RsJEg
   github:owner: tpeh-demo-company
   platformteamadministration:bws_access_token:
-    secure: AAABAMaTFlnKzHMmc3Ng236pmXQqCLgxD5rQ+dzlPEw=
+    secure: AAABAKcJ1inDOI6F2kEt14YovIZ9ErAh0fZRbLCM9fklCTJNGQ+NexyoXiSNKqPdqzdFq01canfky2Ovf1+uGCsUWx3d1A8klPVo8oc0Hk+y4djMi1L/guPIaCxAXbJLT+lpY/VSEeZyWod8m0CZLRezdquLNAxG/9OpXLL1
