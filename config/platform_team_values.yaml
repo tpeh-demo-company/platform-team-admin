@@ -43,17 +43,12 @@ github_repositories:
     branch_protection:
       - pattern: "main"
         enforce_admins: true
-        # Semantic Release Bot will be used to commit files to this repository, so we need to disable for now
-        # Thinking of an alternative approach to this, but for now, we will disable this requirement
-        require_signed_commits: false
+        require_signed_commits: true
         required_pull_request_reviews:
           required_approving_review_count: 0
           dismiss_stale_reviews: false
           require_code_owner_reviews: false
           require_last_push_approval: false
-          bypass_pull_request_allowances:
-            apps:
-              - A_kwHOEsg9vM4ARYar  # tpeh-release-bot node ID
       - pattern: "*"
         enforce_admins: true
         require_signed_commits: true
@@ -81,7 +76,7 @@ github_repositories:
     branch_protection:
       - pattern: "main"
         enforce_admins: true
-        # Semantic Release again...
+        # Semantic Release
         require_signed_commits: false
         required_pull_request_reviews:
           required_approving_review_count: 0
