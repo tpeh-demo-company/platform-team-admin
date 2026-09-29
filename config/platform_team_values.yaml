@@ -9,6 +9,22 @@ github_repositories:
     environments:
       - name: production
 
+  - name: platform-apps
+    description: The Platform Engineer's Handbook - Apps Tenant Repository
+    visibility: public
+    branch_protection:
+      - pattern: "main" # staging
+        enforce_admins: true
+        require_signed_commits: true
+      - pattern: "production" # prod
+        enforce_admins: true
+        require_signed_commits: true
+        required_pull_request_reviews:
+          required_approving_review_count: 0
+          dismiss_stale_reviews: false
+          require_code_owner_reviews: false
+          require_last_push_approval: false
+
   - name: platform-core
     description: The Platform Engineer's Handbook - Core platform runtime
     visibility: public
